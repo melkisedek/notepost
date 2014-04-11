@@ -50,7 +50,7 @@ int open_listener_socket(){
 }
 
 /*
-make the socket reusable so that you can 
+make the socket's port reusable so that you can 
 restart the server without problems.
 */
 void bind_to_port(int socket, int port){
@@ -61,7 +61,7 @@ void bind_to_port(int socket, int port){
 	int reuse = 1;
 	if(setsockopt(socket, SOL_SOCKET, SO_REUSEADDR, (char *)&reuse, sizeof(int)) == -1)
 		error("Can't set the reuse option on the socket");
-	if(bind(socket, (struct sockaddr *)&name, sizeof(name)) == -1)//grab port 30000
+	if(bind(socket, (struct sockaddr *) &name, sizeof(name)) == -1)//grab port 30000
 		error("Can't bind to socket");
 }
 

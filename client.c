@@ -19,7 +19,7 @@ int open_socket(char *host, char *port){
 	struct addrinfo *res;
 	struct addrinfo hints;
 	memset(&hints, 0, sizeof(hints));
-	hints.ai_family = PF_UNSPEC;
+	hints.ai_family = PF_INET;
 	hints.ai_socktype = SOCK_STREAM;
 	if(getaddrinfo(host, port, &hints, &res) == -1)
 		error("Can't resolve the address");
@@ -44,8 +44,8 @@ int say(int socket, const char * s){
 
 int main(int argc, char const *argv[])
 {
-		int d_sock;
-	d_sock = open_socket("localhost", "30000");
+	int d_sock;
+	d_sock = open_socket("localhost.localdomain", "30000");
 	char buf[255];
 //create a string of the path to the page that you want
 	sprintf(buf, "Hallo Server!", argv[1]);
