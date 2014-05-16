@@ -6,6 +6,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <signal.h>
+#include <sys/wait.h>
 
 //display error
 void error(const char* msg){
@@ -29,6 +30,15 @@ void handle_shutdown(int sig){
 
 	fprintf(stderr, "Bye!\n");
 	exit(0);
+}
+
+/* Handler for SIGCHLD, to clean up child processes that have
+terminated. */
+
+static void clean_up_child_process (int signal_number)
+{
+	int status;
+	wait (&status);
 }
 
 // this allows us to create custom handler functions for signals
@@ -88,16 +98,28 @@ int read_in(int socket, char *buf, int len){ //read all characters until '\n'
 		return c; //in case there is an error
 	else if (c == 0)
 		buf[0] = '\0'; //nothing read, sent back empty string
+	else
+		s[c-1]='\0';//Replace '\r' with '\0'
+	return len - slen;
 }
 
 int main(int argc, char const *argv[])
 {
+	struct sigaction sigchld_action;
+
+	/* Install a handler for SIGCHLD that cleans up child processes that
+		have terminated. */
+	memset (&sigchld_action, 0, sizeof (sigchld_action));
+	sigchld_action.sa_handler = &clean_up_child_process;
+	sigaction (SIGCHLD, &sigchld_action, NULL);
+		
+	
 	if(catch_signal(SIGINT, handle_shutdown) == -1) //call handle_handle shutdown if CTRL-C pressed
 		error("Can't set the interrupt handler");
 	listener_d = open_listener_socket();
 	bind_to_port(listener_d, 30000); //create socket on port 30000
 	if(listen(listener_d, 10) == -1) //set listen-queue length to 10
-		error("Can't isten");
+		error("Can't listen");
 
 	struct sockaddr_storage client_addr;
 	unsigned int address_size = sizeof(client_addr);
@@ -116,14 +138,29 @@ int main(int argc, char const *argv[])
 		if(!fork()){
 			close(listener_d);
 
-			//sent data to the client
-			if(say(connect_d,"Welcome to NotePost Server\r\n") != -1){
+			while(1){
+				//sent data to the client
+				if(say(connect_d,"Welcome to NotePost Server\r\n") != -1){
+					read_in(connect_d, buf, sizeof(buf)); //read data from the client
+					printf("%s\n", buf);
+				}
+					 //prints to server terminal
+				say(connect_d,"1. Entertainment \r\n");
+				say(connect_d,"2. TestDate notes\r\n");
+				say(connect_d,"3. General Anouncements\r\n");
+				say(connect_d,"4. Quit\r\n");
+				
 				read_in(connect_d, buf, sizeof(buf)); //read data from the client
-				printf("%s\n", buf);
+					printf("%s", buf);
+					if (buf[0] == 4)
+					{
+						break;
+					}
 			}
 			close(connect_d); //close socket to client from child
 			exit(0); //let child exit, prevent it from entering main serverloop
 		}
+		wait(NULL);
 		close(connect_d);
 	}
 

@@ -10,6 +10,8 @@ client of the note post server
 #include <unistd.h>
 #include <netdb.h>
 
+int d_sock;
+
 void error(const char *msg){
 	fprintf(stderr, "%s: %s\n", msg, strerror(errno));
 	exit(1);
@@ -40,17 +42,7 @@ int say(int socket, const char * s){
 		fprintf(stderr, "%s: %s\n", "Error talking to the server", strerror(errno));
 	return result;
 }
-
-
-int main(int argc, char const *argv[])
-{
-	int d_sock;
-	d_sock = open_socket("localhost.localdomain", "30000");
-	char buf[255];
-//create a string of the path to the page that you want
-	sprintf(buf, "Hallo Server!", argv[1]);
-	say(d_sock, buf);
-	
+void read_srv(){
 	char rec[256];
 	int bytesRcvd = recv(d_sock, rec, 255, 0);
 	while(bytesRcvd){
@@ -61,6 +53,19 @@ int main(int argc, char const *argv[])
 		printf("%s\n", rec);
 		bytesRcvd = recv(d_sock, rec, 255, 0);
 	}
+}
+
+
+int main(int argc, char const *argv[])
+{
+
+	d_sock = open_socket("localhost.localdomain", "30000");
+	char buf[255];
+
+	say(d_sock, "Hallo Server!\r\n");
+	read_srv();
+	scanf("%s\r\n", buf);
+	say(d_sock, buf);
 
 	close(d_sock);
 	return 0;

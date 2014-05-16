@@ -30,14 +30,14 @@
 \use_geometry false
 \use_package amsmath 1
 \use_package amssymb 1
-\use_package cancel 0
+\use_package cancel 1
 \use_package esint 1
 \use_package mathdots 1
-\use_package mathtools 0
+\use_package mathtools 1
 \use_package mhchem 1
-\use_package stackrel 0
-\use_package stmaryrd 0
-\use_package undertilde 0
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
 \biblio_style plain
@@ -69,35 +69,87 @@
 \begin_body
 
 \begin_layout Title
-A multi-user events noticeboard for campus organizations 
-\end_layout
-
-\begin_layout Standard
-<Project Name>
-\end_layout
-
-\begin_layout Standard
-Software Requirements Specification
-\end_layout
-
-\begin_layout Standard
-Version 1.0
-\end_layout
-
-\begin_layout Standard
-18 April 2014
-\end_layout
-
-\begin_layout Standard
-Melkisedek Hamakali 211053686 Lead Software Engineer
-\end_layout
-
-\begin_layout Standard
-Prepared for Procedural Programming Lecturer: Gereon Kapuire 
+A multi-user events noticeboard for campus organizations
 \end_layout
 
 \begin_layout Title
-Software Requirements Specification
+System Requirements Document for:
+\end_layout
+
+\begin_layout Title
+a multi-user events noticeboard for campus organizations 
+\end_layout
+
+\begin_layout Author
+Melkisedek Hamakali 
+\end_layout
+
+\begin_layout Abstract
+211053686 Lead Software Engineer
+\end_layout
+
+\begin_layout Abstract
+Prepared for Procedural Programming 
+\end_layout
+
+\begin_layout Abstract
+Lecturer: Gereon Kapuire 
+\end_layout
+
+\begin_layout Enumerate
+Introduction
+\end_layout
+
+\begin_layout Enumerate
+General Overview and Design Guidelines/Approach 
+\end_layout
+
+\begin_layout Enumerate
+Design Considerations 
+\end_layout
+
+\begin_layout Enumerate
+System Architecture and Architecture Design 
+\end_layout
+
+\begin_layout Enumerate
+Operational Scenarios 
+\end_layout
+
+\begin_layout Enumerate
+Detailed Design 
+\end_layout
+
+\begin_layout Enumerate
+System Integrity Controls 
+\end_layout
+
+\begin_layout Enumerate
+External Interface 
+\end_layout
+
+\begin_layout Enumerate
+Future Contingencies
+\end_layout
+
+\begin_layout Enumerate
+Acronyms 
+\end_layout
+
+\begin_layout Enumerate
+Glossary 
+\end_layout
+
+\begin_layout Enumerate
+Referenced Documents 
+\end_layout
+
+\begin_layout Enumerate
+Record of Changes 
+\end_layout
+
+\begin_layout Enumerate
+Approvals
 \end_layout
 
 \end_body
