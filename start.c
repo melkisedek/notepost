@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h> //sleep()
 #include <ctype.h> //tolower() function
 #include "common.h"
 
@@ -12,12 +13,14 @@ int get_user_data();
 int register_new_user();
 int member_functions(); //go to members(registered users) only functions
 int authenticate_user(); // make sure user exists
+int view_all_notes();
+int find_notes();
+
 
 extern struct account user;
 
 int start_menu(){
-	char choice[80];
-	
+	char choice[80];	
 	int i; //loop index
 
 	printf("---- Wecome to NotePost! ----\n");
@@ -45,16 +48,16 @@ int start_menu(){
 		user.operation();
 	}
 	else if((strcmp("view\n", choice) == 0) || choice[0] == '3'){
-		printf("%s", choice);
+		view_all_notes();
+		sleep(1);
 	}
 	else if((strcmp("find\n", choice) == 0) || choice[0] == '4'){
-		printf("%s", choice);
+		find_notes();
 	}
 	else if((strcmp("create\n", choice) == 0) || 
 		(strcmp("delete\n", choice) == 0) ||choice[0] == '5'){
 			user.operation = authenticate_user;
 			if (user.operation() == 1){
-				printf("Login successful\n");
 				strcpy(note.note_user,user.username); // make logged in user a note user
 				note.operation = member_functions;
 				
@@ -62,8 +65,11 @@ int start_menu(){
 					if(note.operation() == 0)
 						break;//user wants to exit members menu
 					}
-			} else
-				printf("Authentication failed\n");
+			} 
+			else{
+				printf("Authentication failed. Login first.\n");
+				sleep(1);
+			}
 	}
 	else if((strcmp("exit\n", choice) == 0) || choice[0] == '6'){
 		printf("Good bye :-)\n");

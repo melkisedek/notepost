@@ -92,7 +92,7 @@ int main (int argc, char* const argv[])
 	} while (next_option != -1);
 	
 	//user typed no arguments, print help info
-	printf("%s: missing operand\n", program_name); 
+	printf("%s: missing arguments\n", program_name); 
 	printf("Try \'%s --help\' for more information.' \n", program_name);
 	/* This program takes no additional arguments, user specified any. */
 	if (optind != argc)
