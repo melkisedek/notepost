@@ -96,9 +96,10 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The introduction of NotePost software requirements provides an overview
- of the purpose, scope and references of the system.
- In 
+This document will provide details and explains the purpose of the system.
+ This includes what it can do, it's constraints and how it will react to
+ them.
+ This document is meant to be usable by end-users(stake holders) and developers.
 \end_layout
 
 \end_body
