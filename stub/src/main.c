@@ -1,158 +1,102 @@
-#include <assert.h>
-#include <getopt.h>
-#include <netdb.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include <errno.h> // for errno
+#include <sys/types.h>
+#include <signal.h>//interupt signal and other signals
+#include <getopt.h> //argument option parsing
+#include <unistd.h> //read, open, and other POSIX functions 
+#include "main.h"
 
-#include "server.h"
+int start_menu();
+void error();
+char *program_name; /* Name of the running program*/
 
 /* Description of long options for getopt_long. */
-
+/*1 is for options that take an argument e.g. -u myusername*/
 static const struct option long_options[] = {
-	{ "address",      1, NULL, 'a' },
-	{ "help",         0, NULL, 'h' },
-	{ "module-dir",   1, NULL, 'm' },
-	{ "port",         1, NULL, 'p' },
-	{ "verbose",      0, NULL, 'v' },
+	{"start",          0, NULL, 's'},
+	// { "username",      1, NULL, 'u' },
+	// { "password",      1, NULL, 'p' },
+	{ "help",          0, NULL, 'h' },
+	{ "version",       0, NULL, 'v' },
 };
 
-/* Description of short options for getopt_long. */
+/* Description of short options for getopt_long.*/
+/* : for option that expect arguments when specified*/
+static const char* const short_options = "su:p:hv";
 
-static const char* const short_options = "a:hm:p:v";
 /* Usage summary text. */
-
 static const char* const usage_template =
 "Usage: %s [ options ]\n"
-" -a, --address ADDR        Bind to local address (by default, bind\n"
-"                            to all local addresses).\n"
+"-s, --start                Start the program.\n"
+// "-u, --username USERNAME    Specify a username.\n"
+// "-p, --password PASSWORD    Specify password.\n"
 "-h, --help                 Print this information.\n"
-"-m, --module-dir DIR       Load modules from specified directory\n"
-"                            (by default, use executable directory).\n"
-"-p, --port PORT            Bind to specified port.\n"
-"-v, --verbose              Print verbose messages.\n";
+"-v, --version              Print version information.\n";
 
 /* Print usage information and exit. If IS_ERROR is nonzero, write to
 	stderr and use an error exit code. Otherwise, write to stdout and
 	use a non-error termination code. Does not return. */
-
 static void print_usage (int is_error)
 {
 	fprintf (is_error ? stderr : stdout, usage_template, program_name);
 	exit (is_error ? 1 : 0);
 }
 
+// this allows us to create custom handler functions for signals
+int catch_signal(int sig, void (*handler)(int)){
+	struct sigaction action;
+	action.sa_handler = handler;
+	sigemptyset(&action.sa_mask);
+	action.sa_flags = 0;
+	return sigaction(sig, &action, NULL);
+}
+
 int main (int argc, char* const argv[])
 {
-	struct in_addr local_address;
-	uint16_t port;
 	int next_option;
+	
+	//call handle_shutdown if CTRL-C pressed
+	if(catch_signal(SIGINT, handle_shutdown) == -1) 
+		error("Failed to set the interrupt handler");
 
 	/* Store the program name, which we’ll use in error messages.*/
 	program_name = argv[0];
 	
-	/* Set defaults for options. Bind the server to all local addresses,
-		and assign an unused port automatically. */
-	local_address.s_addr = INADDR_ANY;
-	port = 0;
-	/* Don’t print verbose messages. */
-	verbose = 0;
-	/* Load modules from the directory containing this executable. */
-	module_dir = get_self_executable_directory ();
-	assert (module_dir != NULL);
-
 	/* Parse options. */
 	do {
-		next_option =
-			getopt_long (argc, argv, short_options, long_options, NULL);
+		next_option = getopt_long(argc, argv, short_options, long_options, NULL);
 		switch (next_option) {
-		case 'a':
-		/* User specified -a or --address. */
-		{
-			struct hostent* local_host_name;
-			
-			/* Look up the hostname the user specified. */
-			local_host_name = gethostbyname (optarg);
-			if (local_host_name == NULL || local_host_name->h_length == 0)
-				/* Could not resolve the name. */
-				error (optarg, "invalid host name");
-			else
-				/* Hostname is OK, so use it. */
-				local_address.s_addr =
-				*((int*) (local_host_name->h_addr_list[0]));
-		}
-		break;
-
+		case 's':
+			while(1){
+				if(start_menu() == 0)
+					return 0;//user wants to exit program
+			}
+			break;
 		case 'h':
-			/* User specified -h or --help.*/
-			print_usage (0);
-		
-		case 'm':
-		/* User specified -m or --module-dir.*/
-		{
-			struct stat dir_info;
-			
-			/* Check that it exists. */
-			if (access (optarg, F_OK) != 0)
-				error (optarg, "module directory does not exist");
-			/* Check that it is accessible. */
-			if (access (optarg, R_OK | X_OK) != 0)
-				error (optarg, "module directory is not accessible");
-			/* Make sure that it is a directory. */
-			if (stat (optarg, &dir_info) != 0 || !S_ISDIR (dir_info.st_mode))
-				error (optarg, "not a directory");
-			/* It looks OK, so use it. */
-			module_dir = strdup (optarg);
-		}
-		break;
-
-		case 'p':
-		/* User specified -p or --port.*/
-		{
-			long value;
-			char* end;
-
-			value = strtol (optarg, &end, 10);
-			if (*end != '\0')
-				/* The user specified nondigits in the port number. */
-				print_usage (1);
-			/* The port number needs to be converted to network (big endian)
-				byte order. */
-			port = (uint16_t) htons (value);
-		}
-		break;
-
+			print_usage (0); /* User specified -h or --help.*/	
 		case 'v':
-		/* User specified -v or --verbose. */
-			verbose = 1;
-		break;
+			printf("NotePost version 0.1\n");/*User specified -v or --version. */
+			exit(0);//close program
+			break;
 
 		case '?':
-			/* User specified an unrecognized option.*/
-			print_usage (1);
-
-		case -1:
-		/* Done with options.*/
-		break;
+			print_usage (1);/* User specified an unrecognized option.*/
+		case -1:/* Done with options.*/
+			break;
 				
 		default:
-			abort ();
+			abort (); // close program
 		}
 	} while (next_option != -1);
-		
-		/* This program takes no additional arguments.
-			user specified any. */
-		if (optind != argc)
-			print_usage (1);
-
-		/* Print the module directory, if we’re running verbose. */
-		if (verbose)
-			printf ("modules will be loaded from %s\n", module_dir);
-		
-		/* Run the server. */
-		server_run (local_address, port);
+	
+	//user typed no arguments, print help info
+	printf("%s: arguments missing \n", program_name); 
+	printf("Try \'%s --help\' for more information.' \n", program_name);
+	/* This program takes no additional arguments, user specified any. */
+	if (optind != argc)
+		print_usage (1);
 
 	return 0;
 }
