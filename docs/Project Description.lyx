@@ -1,0 +1,193 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+NotePost Notice Tracking System, Project Description
+\end_layout
+
+\begin_layout Author
+by Melkisedek Hamakali (211053686), Lead Developer
+\end_layout
+
+\begin_layout Date
+18 April 2014
+\end_layout
+
+\begin_layout Abstract
+This document is a project description of the NotePost system for Procedural
+ Programming (PPR) term project.
+ This is 
+\emph on
+version 1.0 
+\emph default
+of the system.
+\end_layout
+
+\begin_layout Section
+Problem Identification
+\end_layout
+
+\begin_layout Standard
+The Polytechnic of Namibia uses notice boards for informing students of
+ events happening in the institution.
+ These are a good traditional way of giving information to students.
+ 
+\end_layout
+
+\begin_layout Standard
+However at times it can be inadequate, for example 
+\end_layout
+
+\begin_layout Itemize
+some students don't read the notices because of many reasons such as busy
+ schedules, distance education and absenteeism.
+ 
+\end_layout
+
+\begin_layout Itemize
+They could read about some of the events on the polytechnic website but
+ unfortunately many social events are not shown there.
+ 
+\end_layout
+
+\begin_layout Itemize
+Some notices are badly designed and do not attract student attention even
+ when they have important information such as lecture times, test dates
+ etc.
+\end_layout
+
+\begin_layout Section
+Proposed Solution
+\end_layout
+
+\begin_layout Standard
+My proposed solution is to build a multi-user program that allows lecturers,
+ SRCs and anyone with authority over notice boards to sent messages to a
+ central place where they can be easily controlled.
+ 
+\end_layout
+
+\begin_layout Standard
+It should allow them to do the following: 
+\end_layout
+
+\begin_layout Itemize
+Allow students to have a central place to view all notices 
+\end_layout
+
+\begin_layout Itemize
+Make setting up a notice as easy as possible without having to teach the
+ customers new skills.
+\end_layout
+
+\begin_layout Section
+Other Solutions
+\end_layout
+
+\begin_layout Standard
+I don't know of many programs that try to fix this problem.
+ It can also be solved by using: 
+\end_layout
+
+\begin_layout Itemize
+Oracle's apex but apex also provides too many features which I would never
+ use for small project.
+ 
+\end_layout
+
+\begin_layout Itemize
+We could build a complete website with Content Management Systems to manage
+ notices however the learning overhead (for developer and customer) might
+ delay the project more than necessary.
+\end_layout
+
+\begin_layout Section
+Feasibility Of Proposed Solution
+\end_layout
+
+\begin_layout Standard
+My solution is feasible because: 
+\end_layout
+
+\begin_layout Itemize
+I already know C programming and will not be delayed in beginning of the
+ project.
+ 
+\end_layout
+
+\begin_layout Itemize
+The c programming language is simple and does not offer many complicated
+ frameworks and classes.
+ This is good for the project because the project doesn't require many of
+ the advanced features.
+\end_layout
+
+\end_body
+\end_document
