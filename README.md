@@ -17,6 +17,6 @@ There are several `make` targets to
 assist development:
 
   * With no arguments `make` compiles all the sources to notepost
-  * `notepost` does the above also
-  * `clean` removes all .o files and notepost executable
-  * `clean_all` removes all .o , .data , temporary files and the notepost executable
+  * `make notepost` does the above also
+  * `make clean` removes all .o files and notepost executable
+  * `make clean_all` removes all .o , .data , temporary files and the notepost executable
