@@ -35,7 +35,8 @@ int view_all_notes() {
 	   read_bytes = read(file_discriptor, &entry, sizeof(struct notice)); 
     }
     close(file_discriptor); // Close the userdata file.
-    if(read_bytes < sizeof(struct notice)){ //This means that the end of file was reached.
+    if(read_bytes < sizeof(struct notice)){ 
+    //This means that the end of file was reached.
         printf("---------end of file---------\n");
         return -1; // not found
     }
@@ -75,7 +76,8 @@ int find_notes() {
         }
     }
     close(file_discriptor); // Close the userdata file.
-    if(read_bytes < sizeof(struct notice)){ //This means that the end of file was reached.
+    if(read_bytes < sizeof(struct notice)){ 
+    //This means that the end of file was reached.
         printf("---------end of file---------\n");
         return -1; // not found
     }

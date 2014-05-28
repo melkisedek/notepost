@@ -54,7 +54,7 @@ int write_new_user(){
 	int file_discriptor;
 // open for read/write, create if not exist, append to end of file, 
 //only the current user[as in computer, not this program] has r/w permission
-	file_discriptor = open(USERDATA, O_WRONLY|O_CREAT|O_APPEND, S_IRUSR|S_IWUSR);
+	file_discriptor = open(USERDATA, O_WRONLY|O_CREAT|O_APPEND,S_IRUSR|S_IWUSR);
 	if (file_discriptor == -1)
 		error("Failed to open USERDATA file");
 	write(file_discriptor, &user, sizeof(struct account));
@@ -76,10 +76,12 @@ int get_user_data() {
     read_bytes = read(file_discriptor, &entry, sizeof(struct account)); 
     // Loop until proper username is found.
     while((strcmp(entry.username, user.username) != 0) && read_bytes > 0) { 
-	   read_bytes = read(file_discriptor, &entry, sizeof(struct account)); // Keep reading.
+	   read_bytes = read(file_discriptor, &entry, sizeof(struct account)); 
+	   // Keep reading.
     }
     close(file_discriptor); // Close the userdata file.
-    if(read_bytes < sizeof(struct account)) //This means that the end of file was reached.
+    if(read_bytes < sizeof(struct account)) 
+    //This means that the end of file was reached.
         return -1; // not found
     else 
         user = entry; //copy to new entry

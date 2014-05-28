@@ -118,16 +118,16 @@ int delete_note(){
 	if (read_bytes == -1)
 		error("Failed to read notedata:");
 
-	// Loop until  username is found.//escape to next linewith \ (no spaces after it)
+	// Loop until  username is found.
     while((strcmp(entry.topic, choice) != 0) \
-    	&& (strcmp(entry.note_user, note.note_user) != 0) && read_bytes > 0) {
-			//write read bytes to temporary file
-	    	if(write(tmp_discriptor, &entry, sizeof(struct notice))!= read_bytes)
-	    		error("failed to write temporary file"); 
-	    	// Keep reading.
-		   	read_bytes = read(file_discriptor, &entry, sizeof(struct notice)); 
-		   	if (read_bytes == -1)
-				error("Failed to read notedata:");
+	&& (strcmp(entry.note_user, note.note_user) != 0) && read_bytes > 0) {
+		//write read bytes to temporary file
+    	if(write(tmp_discriptor, &entry, sizeof(struct notice))!= read_bytes)
+    		error("failed to write temporary file"); 
+    	// Keep reading.
+	   	read_bytes = read(file_discriptor, &entry, sizeof(struct notice)); 
+	   	if (read_bytes == -1)
+			error("Failed to read notedata:");
     }
 
     close(file_discriptor); // Close the notedata file.

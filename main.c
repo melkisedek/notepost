@@ -66,7 +66,7 @@ int main (int argc, char* const argv[])
 	
 	/* Parse options. */
 	do {
-		next_option = getopt_long(argc, argv, short_options, long_options, NULL);
+		next_option = getopt_long(argc, argv, short_options, long_options,NULL);
 		switch (next_option) {
 		case 's':
 			while(1){
@@ -77,7 +77,7 @@ int main (int argc, char* const argv[])
 		case 'h':
 			print_usage (0); /* User specified -h or --help.*/	
 		case 'v':
-			printf("NotePost version 0.1\n");/*User specified -v or --version. */
+			printf("NotePost version 0.1\n");/*User specified -v or --version.*/
 			exit(0);//close program
 			break;
 

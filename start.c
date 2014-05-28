@@ -57,7 +57,8 @@ int start_menu(){
 		(strcmp("delete\n", choice) == 0) ||choice[0] == '5'){
 			user.operation = authenticate_user;
 			if (user.operation() == 1){
-				strcpy(note.note_user,user.username); // make logged in user a note user
+				strcpy(note.note_user,user.username);
+				// make logged in user a note user
 				note.operation = member_functions;
 				
 				while(1){

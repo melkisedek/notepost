@@ -1,7 +1,7 @@
 # notepost
 ========
 
-A c program for my term project (PPR - procedural programming) at the polytechnic of nambia.
+A c program for my term project (PPR - procedural programming) at the polytechnic of namibia.
 
 ## Installation
 ### Compile from source

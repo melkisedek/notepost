@@ -547,7 +547,7 @@ The user is expected to know how to read English and use a computer keyboard.
 status open
 
 \begin_layout Plain Layout
-Unix, Linux, OSX and similar
+Unix, Linux, OS X and similar
 \end_layout
 
 \end_inset
@@ -637,6 +637,96 @@ Overall use case
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Entity Relationship Diagram
+\end_layout
+
+\begin_layout Standard
+\begin_inset External
+	template PDFPages
+	filename Notepost ERD.pdf
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Constraints
+\end_layout
+
+\begin_layout Standard
+The system has the following constraints:
+\end_layout
+
+\begin_layout Itemize
+The end user must be familiar with the command-line of *nix 
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Unix, Linux, OS X and similar
+\end_layout
+
+\end_inset
+
+ systems
+\end_layout
+
+\begin_layout Itemize
+This program will not run on windows at this point
+\end_layout
+
+\begin_layout Itemize
+It relies on functionality provided by POSIX and Linux interfaces which
+ may not be supported by some OS
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+operating system
+\end_layout
+
+\end_inset
+
+ vendors.
+\end_layout
+
+\begin_layout Itemize
+It is not provided as an executable binary to avoid compatibility issues.
+\end_layout
+
+\begin_layout Section
+Input
+\end_layout
+
+\begin_layout Standard
+All user input will be received via keyboard on PC.
+ The system will store user-name as plain text in a user-data file but the
+ password will be hashed by sha512 algorithm before storage.
+\end_layout
+
+\begin_layout Section
+Output
+\end_layout
+
+\begin_layout Standard
+The system shall give output on screen in case of errors or misuse of program.
+ The processes data of the system such as the notes and user-data shall
+ be store to disk.
+\end_layout
+
+\begin_layout Section
+Restrictions
+\end_layout
+
+\begin_layout Standard
+All unregistered users will not be able to log in and will also not be able
+ to delete or create notices.
+ Unregistered members will have access to viewing and searching of specific
+ notes.
 \end_layout
 
 \end_body

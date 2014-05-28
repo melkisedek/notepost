@@ -41,10 +41,12 @@ int authenticate_user() {
     read_bytes = read(file_discriptor, &entry, sizeof(struct account)); 
     // Loop until proper username is found.
     while((strcmp(entry.username, user.username) != 0) && read_bytes > 0) { 
-	   read_bytes = read(file_discriptor, &entry, sizeof(struct account)); // Keep reading.
+	   read_bytes = read(file_discriptor, &entry, sizeof(struct account)); 
+	   // Keep reading.
     }
     close(file_discriptor); // Close the userdata file.
-    if(read_bytes < sizeof(struct account)) {//This means that the end of file was reached.
+    if(read_bytes < sizeof(struct account)) {
+    //This means that the end of file was reached.
         return -1; // not found
     }
     else {
@@ -65,10 +67,12 @@ int get_login_data() {
     read_bytes = read(file_discriptor, &entry, sizeof(struct account)); 
     // Loop until proper username is found.
     while((strcmp(entry.username, user.username) != 0) && read_bytes > 0) { 
-	   read_bytes = read(file_discriptor, &entry, sizeof(struct account)); // Keep reading.
+	   read_bytes = read(file_discriptor, &entry, sizeof(struct account)); 
+	   // Keep reading.
     }
     close(file_discriptor); // Close the userdata file.
-    if(read_bytes < sizeof(struct account)) //This means that the end of file was reached.
+    if(read_bytes < sizeof(struct account)) 
+    //This means that the end of file was reached.
         return -1; // not found
     else 
         ; //user found, do nothing
