@@ -14,7 +14,7 @@ char* hash_password()
 	//keep the seed the same so that 
 	//hashes are the same for the same words
 	unsigned long seed[2]={9989987,9978788};
- 	char salt[] = "$1$"; //md5 encryption, 22 chars
+ 	char salt[] = "$6$"; //SHA-512 encryption, 86 characters
  	const char *const seedchars =
    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
    "abcdefghijklmnopqrstuvwxyz./0123456789";

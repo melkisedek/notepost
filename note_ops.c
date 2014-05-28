@@ -5,7 +5,7 @@
 #include <sys/stat.h>//file operations
 #include <fcntl.h> //file operations
 #include <crypt.h> //encryption algorithms
-#include <unistd.h> //read, open, sleep and other POSIX functions
+#include <unistd.h> //read, open, and other POSIX functions
 #include "common.h"
 
 //void error();

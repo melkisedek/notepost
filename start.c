@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h> //sleep()
 #include <ctype.h> //tolower() function
+#include <unistd.h>
 #include "common.h"
 
 //display error and exit
@@ -49,7 +49,6 @@ int start_menu(){
 	}
 	else if((strcmp("view\n", choice) == 0) || choice[0] == '3'){
 		view_all_notes();
-		sleep(1);
 	}
 	else if((strcmp("find\n", choice) == 0) || choice[0] == '4'){
 		find_notes();
