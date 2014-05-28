@@ -13,4 +13,4 @@ make notepost
 Type the follpwing to run it.
 ```bash
 ./notepost --start
-```bash
+```
