@@ -22,16 +22,16 @@ void member_functions(); //go to members(registered users) only functions
 
 int login_user(){
 
-	printf("Type your username and password below to login\n");
-	printf(" Please type your username\n>");
+	printf(" Type your username and password below to login\n");
+	printf("Please type your username\n>");
 	fgets(user.username, 80, stdin);
-	printf(" Please type your password\n>");
+	printf("Please type your password\n>");
 	fgets(user.password, 400, stdin);
 
 	//verify is doesn't already exist, if not existing terminate
 	user.operation = get_login_data;
 	if(user.operation() == -1){
-		printf("User doesn't exist: %s\n", user.username);
+		printf(" User doesn't exist: %s\n", user.username);
 		sleep(1);
 		return -1;
 	}else{//user exists, hash password
@@ -91,10 +91,10 @@ int get_user_data() {
 
 int register_new_user(){
 
-	printf("> Hi, to register you need a username and password\n");
-	printf("  Please type a username\n>>");
+	printf(" Hi, to register you need a username and password\n");
+	printf("Please type a username\n>>");
 	fgets(user.username, 80, stdin);
-	printf("  Please type a password\n>>");
+	printf("Please type a password\n>>");
 	fgets(user.password, 400, stdin);
 	//verify is doesn't already exist, if not existing,
 	user.operation = get_user_data;
@@ -109,6 +109,6 @@ int register_new_user(){
 	}
 
 	printf("# Please don\'t forget your username and password.\n");
-	sleep(1);
+	sleep(2);
 	return 1;
 }

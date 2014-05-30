@@ -23,6 +23,7 @@ int view_all_notes() {
     file_discriptor = open(NOTEDATA, O_RDONLY);
     if(file_discriptor == -1){ // Can't open the file, maybe it doesn't exist
 	   printf("Error: Couldn't open notedata file: %s\n",strerror(errno));
+       printf("Hint: Try creating a note first.\n");
        return -1;
     }
 	// Read the first chunk
@@ -32,13 +33,13 @@ int view_all_notes() {
         // print out and Keep reading.
         printf(" Uploader: %s Date: %s Topic: %s Description: %s", 
             entry.note_user, entry.date, entry.topic, entry.description);
-        printf("--------------------------------------------------\n");
+        printf(" --------------------------------------------------\n");
 	   read_bytes = read(file_discriptor, &entry, sizeof(struct notice)); 
     }
     close(file_discriptor); // Close the userdata file.
     if(read_bytes < sizeof(struct notice)){ 
     //This means that the end of file was reached.
-        printf("---------end of file---------\n");
+        printf(" ---------end of file---------\n");
         return -1; // not found
     }
 

@@ -76,7 +76,9 @@ int start_menu(){
 		printf("Good bye :-)\n");
 		return 0; //return 0 to main for termination
 	}
-	else printf("# I din\'t understand. Try again please\n");
-		
+	else {
+		printf("# I din\'t understand. Try again please\n");
+		sleep(1);
+		}
 	return 1;
 }

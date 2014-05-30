@@ -43,11 +43,13 @@ int member_functions(){
 			note.operation();
 		}
 		else if ((strcmp("delete\n", choice) == 0)||choice[0] == '2'){
-			note.operation = delete_note;
-			if (note.operation() == -1)
-			{
-				printf("Note note found\n");
-			}
+			// note.operation = delete_note;
+			// if (note.operation() == -1)
+			// {
+			// 	printf("Note note found\n");
+			// }
+			printf("Sorry, the delete feature has been deactivated due to a bug.\n");
+			sleep(2);
 		}
 		else if ((strcmp("exit\n", choice) == 0) || choice[0] == '3'){
 			break;//user wants to exit members menu

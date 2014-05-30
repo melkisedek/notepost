@@ -15,4 +15,4 @@ clean:
 	rm *.o notepost
 
 clean_all:
-	rm *.o *.data note_temp.*
+	rm *.o *.data note_temp.* notepost
