@@ -1,3 +1,4 @@
+//encrypt.c
 #include <stdio.h>
 #include <string.h> //strcmp, strcpy
 #include <sys/stat.h>//file operations

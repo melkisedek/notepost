@@ -25,7 +25,20 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
-\use_hyperref false
+\spacing single
+\use_hyperref true
+\pdf_title "Notepost Program Development Documentation"
+\pdf_author "Melkisedek Hamakali"
+\pdf_subject "PPR Term Project"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder true
+\pdf_colorlinks false
+\pdf_backref false
+\pdf_pdfusetitle true
 \papersize default
 \use_geometry false
 \use_package amsmath 1
@@ -69,7 +82,7 @@
 \begin_body
 
 \begin_layout Title
-Notepost Source Code
+Notepost Program Developer Documentation
 \end_layout
 
 \begin_layout Author
@@ -82,10 +95,250 @@ Melkisedek Hamakali
 
 \begin_layout Abstract
 This is the complete source code of the system as at the date above.
+ Visit 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://github.com/melkisedek/notepost"
+target "https://github.com/melkisedek/notepost"
+
+\end_inset
+
+ for updated content that might not have been in this document.
+ 
+\end_layout
+
+\begin_layout Abstract
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Installation
+\end_layout
+
+\begin_layout Standard
+Notepost is a c program for my term project (PPR - procedural programming)
+ at the polytechnic of Namibia.
+\end_layout
+
+\begin_layout Subsection
+Compile from source 
+\end_layout
+
+\begin_layout Standard
+To compile it from source, connect to the internet and type the following
+ in your terminal to receive the source code.
+ Ignore the '$' sign, it represents your prompt.
+\end_layout
+
+\begin_layout LyX-Code
+$ git clone https://github.com/melkisedek/notepost.git 
+\end_layout
+
+\begin_layout Standard
+The code will be in a folder called notepost
+\end_layout
+
+\begin_layout Subsection
+Building the executable
+\end_layout
+
+\begin_layout Standard
+To build the code type:
+\end_layout
+
+\begin_layout LyX-Code
+$ cd notepost 
+\end_layout
+
+\begin_layout LyX-Code
+$ make notepost 
 \end_layout
 
 \begin_layout LyX-Code
 
+\end_layout
+
+\begin_layout Standard
+Type the following to run it.
+\end_layout
+
+\begin_layout LyX-Code
+$ ./notepost --start 
+\end_layout
+
+\begin_layout Section
+Developing 
+\end_layout
+
+\begin_layout Standard
+You need to be on a machine that supports the POSIX standard, such as linux
+ and other Unixes.
+ Developing this code is possible on windows if you are using Cygwin
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Go to 
+\begin_inset CommandInset href
+LatexCommand href
+name "www.cygwin.com"
+target "www.cygwin.com"
+
+\end_inset
+
+ install cygwin
+\end_layout
+
+\end_inset
+
+ or MinGW
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Visit 
+\begin_inset CommandInset href
+LatexCommand href
+name "www.mingw.org"
+target "www.mingw.org"
+
+\end_inset
+
+ to install it
+\end_layout
+
+\end_inset
+
+ environments.
+ You can get the source code by following the above steps.
+ There are several 
+\emph on
+make
+\emph default
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+A utility that automatically builds executable programs and libraries from
+ source code by reading files called makefiles.
+\end_layout
+
+\end_inset
+
+ targets to assist development:
+\end_layout
+
+\begin_layout Itemize
+With no arguments 
+\emph on
+make
+\emph default
+ compiles all the sources to an executable called 
+\emph on
+notepost
+\end_layout
+
+\begin_layout LyX-Code
+
+\emph on
+make notepost
+\emph default
+ 
+\end_layout
+
+\begin_layout Itemize
+does the same as make with no arguments passed.
+\end_layout
+
+\begin_layout LyX-Code
+
+\emph on
+make clean 
+\end_layout
+
+\begin_layout Itemize
+removes all .o files and the notepost executable 
+\end_layout
+
+\begin_layout LyX-Code
+make clean_all 
+\end_layout
+
+\begin_layout Itemize
+removes all .o , .data , temporary files and the notepost executable
+\end_layout
+
+\begin_layout Section
+Source code Description
+\end_layout
+
+\begin_layout Standard
+The root of the 
+\emph on
+notepost
+\emph default
+ folder contains the notepost code source files which are 
+\emph on
+encrypt.c, Makefile, members.c, note_ops.c, README.md, start.c
+\emph default
+ and 
+\emph on
+user_operations.c
+\emph default
+.
+ The 
+\emph on
+headers
+\emph default
+ folders contains the headers 
+\emph on
+main.h
+\emph default
+ and 
+\emph on
+common.h.
+ 
+\emph default
+The 
+\emph on
+docs 
+\emph default
+folder contains partial documentation of the system and their supporting
+ files.
+ The 
+\emph on
+data
+\emph default
+ folder is meant for data files that system creates, however it's current
+ not being used yet.
+ The 
+\emph on
+stub
+\emph default
+ folder contains the source code of a client and server application prototype
+ that will be used for system later.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Notepost's source code
+\end_layout
+
+\begin_layout Standard
+The following is the code for notepost.
 \end_layout
 
 \end_body

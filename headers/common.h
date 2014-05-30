@@ -1,3 +1,4 @@
+//common.h
 // account struct to store information about users
 struct account{
 	char username[80];

@@ -1,3 +1,4 @@
+#Makafile
 # Default C compiler options.
 CFLAGS= -Wall -std=c11 -D_POSIX_C_SOURCE -g 
 
