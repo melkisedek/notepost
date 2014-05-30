@@ -10,7 +10,6 @@ struct notice
 {
 	char note_user[80];
 	char date[80];
-	long int time_seconds;
 	char topic[100];
 	char description[2048];
 	int (*operation)();

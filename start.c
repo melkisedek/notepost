@@ -53,6 +53,7 @@ int start_menu(){
 	}
 	else if((strcmp("find\n", choice) == 0) || choice[0] == '4'){
 		find_notes();
+		//printf("Functin disable due to bug\n");
 	}
 	else if((strcmp("create\n", choice) == 0) || 
 		(strcmp("delete\n", choice) == 0) ||choice[0] == '5'){

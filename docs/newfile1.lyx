@@ -1,0 +1,167 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+NotePost Notice Tracking System, User Manual
+\end_layout
+
+\begin_layout Author
+Melkisedek Hamakali
+\end_layout
+
+\begin_layout Date
+30 May 2014
+\end_layout
+
+\begin_layout Abstract
+This document guides the user in installing and using features of the notepost.
+\end_layout
+
+\begin_layout Section
+Installation
+\end_layout
+
+\begin_layout Standard
+Before we begin, you must git
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+is a distributed revision control and source code management (SCM) system
+ with an emphasis on speed
+\end_layout
+
+\end_inset
+
+, make
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+A UNIX utility for maintaining, updating, and regenerating groups of programs.
+\end_layout
+
+\end_inset
+
+ and the libgcrypt
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+libgcrypt is a cryptographic library developed as a separated module of
+ GnuPG
+\end_layout
+
+\end_inset
+
+ library installed.
+ Consult your package manager or Google for installation of those if they
+ are not packaged with your system.
+ To begin installation, open your terminal or command prompt application.
+\end_layout
+
+\begin_layout Standard
+Please note that nano would be presented by your user-name and proline by
+ your PC's name in the format user-name@PC-name.
+ Type the following commands (ignore the $, it represent the prompt).
+ Wait for the $ sign after each command before typing the next one.
+\end_layout
+
+\begin_layout LyX-Code
+$ git clone https://github.com/melkisedek/notepost.git
+\end_layout
+
+\begin_layout LyX-Code
+$ cd notepost
+\end_layout
+
+\begin_layout LyX-Code
+$ make 
+\end_layout
+
+\begin_layout LyX-Code
+$ ./notepost
+\end_layout
+
+\begin_layout Standard
+Those commands compile (
+\emph on
+$ make
+\emph default
+) and run (
+\emph on
+$ ./notepost
+\emph default
+) the notepost program.
+ It should result into something similar to the pictures below.
+\end_layout
+
+\end_body
+\end_document

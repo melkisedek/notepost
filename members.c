@@ -61,12 +61,9 @@ int member_functions(){
 /*All user who get here are already authenticated, safe to write the note*/
 int create_note(){
 	int file_discriptor, i;
-	long int seconds;
-	const time_t *the_time;
-	seconds = time(NULL);
-	the_time = &seconds;
-	strcpy(note.date, ctime(the_time));
-	note.time_seconds = seconds;
+	time_t the_time;
+	time(&the_time);
+	strcpy(note.date, ctime(&the_time));
 	
 	printf("Enter the topic of your note\n>");
 	fgets(note.topic, 100, stdin);
@@ -88,6 +85,7 @@ int create_note(){
 		close(file_discriptor);
 		error("faied to write notedata:");
 	}
+
 	close(file_discriptor);
 	return 0;
 }
@@ -122,7 +120,7 @@ int delete_note(){
 		error("Failed to read notedata:");
 
 	// Loop until  username is found.
-    while((strcmp(entry.topic, choice) != 0) \
+    if((strcmp(entry.topic, choice) != 0) \
 	&& (strcmp(entry.note_user, note.note_user) != 0) && read_bytes > 0) {
 		//write read bytes to temporary file
     	if(write(tmp_discriptor, &entry, sizeof(struct notice))!= read_bytes)

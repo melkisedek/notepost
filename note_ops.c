@@ -13,7 +13,7 @@
 
 extern struct account user; //user struct
 extern struct notice note;
-
+void error(); //display error and exit
 /* This function reads the notedata from the file. 
 It returns -1 if it is unable to find notedata.*/
 int view_all_notes() {
@@ -65,18 +65,23 @@ int find_notes() {
        printf("Error: Couldn't open notedata file: %s\n",strerror(errno));
        return -1;
     }
-    // Read the first chunk
+    
+   do { // Read the first chunk
     read_bytes = read(file_discriptor, &entry, sizeof(struct notice)); 
     // Loop until file ends
-    while(read_bytes > 0) { 
+        if (read_bytes == -1)
+        {
+            error("Error: Failed to read notedata");
+        }
         if (strcmp(entry.topic, choice) == 0){
             // print out and Keep reading.
-            printf(" Uploader: %s Date: %s Topic: %s Description: %s", 
+            printf(" Uploader: %s Date: %s Topic: %s Description: %s",
                 entry.note_user, entry.date, entry.topic, entry.description);
             printf("--------------------------------------------------\n");
-           read_bytes = read(file_discriptor, &entry, sizeof(struct notice));
+            close(file_discriptor); // Close the userdata file.
+            return 1;
         }
-    }
+    } while((read_bytes = sizeof(struct notice)) || (read_bytes>0));
     close(file_discriptor); // Close the userdata file.
     if(read_bytes < sizeof(struct notice)){ 
     //This means that the end of file was reached.
