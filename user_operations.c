@@ -45,7 +45,7 @@ int login_user(){
 			return 1;
 		} else
 			printf("Authentication failed\n");
-			sleep(1);
+		sleep(1);
 	}
 
 	return 0;

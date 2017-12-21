@@ -98,10 +98,10 @@ int delete_note(){
     int len;//length of string in choice[]
 
     tmp_discriptor = mkstemp(tmp_file);//creates temporary file
-    if (tmp_discriptor == -1)
-    	error("Temporary file creation failed");
-
-	
+    if (tmp_discriptor == -1){
+		error("Temporary file creation failed");
+	}
+		
 	printf("Note: You can only delete notes you created\n");
 	printf("Enter the topic of the note\n>");
 	fgets(choice, 100, stdin);

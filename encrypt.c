@@ -1,5 +1,6 @@
 //encrypt.c
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h> //strcmp, strcpy
 #include <sys/stat.h>//file operations
 #include <fcntl.h> //file operations
@@ -15,20 +16,21 @@ char* hash_password()
 	//keep the seed the same so that 
 	//hashes are the same for the same words
 	unsigned long seed[2]={9989987,9978788};
- 	char salt[] = "$6$"; //SHA-512 encryption, 86 characters
+ 	char salt[87] = "$6$"; //SHA-512 encryption, 86 characters
  	const char *const seedchars =
    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
    "abcdefghijklmnopqrstuvwxyz./0123456789";
    int i;
    /* Turn it into printable characters from `seedchars'. */
 	 for (i = 0; i < 8; i++)
-	   salt[3+i] = seedchars[(seed[i/5] >> (i%5)*6) & 0x3f];
+	   salt[3+i] = seedchars[(seed[i/5] >> (i%5)*6) & 0x40];
     char *encrypted;
     encrypted = crypt(user.password, salt);
     if (encrypted == NULL)
 	     error("Hash failed");
-	strcat(encrypted,"\n"); //terminate like fgets '\n\0'
-	return encrypted;
+    strcpy(user.hash, encrypted);
+    free(encrypted);
+	return user.hash;
 }
 
 int authenticate_user() {

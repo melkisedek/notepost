@@ -73,6 +73,11 @@ int find_notes() {
         {
             error("Error: Failed to read notedata");
         }
+        if(read_bytes < sizeof(struct notice)){ 
+        //This means that the end of file was reached.
+            printf("---------end of file---------\n");
+            return -1; // not found
+        }
         if (strcmp(entry.topic, choice) == 0){
             // print out and Keep reading.
             printf(" Uploader: %s Date: %s Topic: %s Description: %s",
@@ -81,13 +86,9 @@ int find_notes() {
             close(file_discriptor); // Close the userdata file.
             return 1;
         }
-    } while((read_bytes = sizeof(struct notice)) || (read_bytes>0));
+    } while((read_bytes = sizeof(struct notice)) || (read_bytes > 0));
     close(file_discriptor); // Close the userdata file.
-    if(read_bytes < sizeof(struct notice)){ 
-    //This means that the end of file was reached.
-        printf("---------end of file---------\n");
-        return -1; // not found
-    }
+    
 
     return 1; // Return a success.
 }

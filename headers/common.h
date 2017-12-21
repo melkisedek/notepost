@@ -3,6 +3,7 @@
 struct account{
 	char username[80];
 	char password[400];
+	char hash[90];
 	int (*operation)(); //function pointer to user operation
 };
 
