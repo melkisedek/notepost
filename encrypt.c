@@ -77,7 +77,6 @@ int get_login_data() {
     if(read_bytes < sizeof(struct account)) 
     //This means that the end of file was reached.
         return -1; // not found
-    else 
-        ; //user found, do nothing
+        
     return 1; // Return a success.
 }
