@@ -1,4 +1,3 @@
-_Warning: This is a very old project, it should not compile on any recent compiler. It handles memory UNSAFELY._
 # notepost
 ========
 
