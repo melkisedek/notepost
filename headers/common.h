@@ -1,9 +1,15 @@
-//common.h
+#include "sha256.h" //encryption algorithms
+
+//display error and terminate
+void error(const char* msg){
+	fprintf(stderr, "%s: %s\n", msg, strerror(errno));
+	exit(1);
+}
 // account struct to store information about users
 struct account{
 	char username[80];
 	char password[400];
-	char hash[90];
+	char hash[SHA256_BYTES];
 	int (*operation)(); //function pointer to user operation
 };
 

@@ -4,32 +4,25 @@
 #include <string.h> //strcmp, strcpy
 #include <sys/stat.h>//file operations
 #include <fcntl.h> //file operations
-#include <crypt.h> //encryption algorithms
 #include <unistd.h> //read, open, and other POSIX functions 
 #include "common.h"
+#include "sha256.h" //encryption algorithms
 
 extern struct account user;
-void error();
 
 char* hash_password()
 {
-	//keep the seed the same so that 
-	//hashes are the same for the same words
-	unsigned long seed[2]={9989987,9978788};
- 	char salt[87] = "$6$"; //SHA-512 encryption, 86 characters
- 	const char *const seedchars =
-   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-   "abcdefghijklmnopqrstuvwxyz./0123456789";
-   int i;
-   /* Turn it into printable characters from `seedchars'. */
-	 for (i = 0; i < 8; i++)
-	   salt[3+i] = seedchars[(seed[i/5] >> (i%5)*6) & 0x40];
-    char *encrypted;
-    encrypted = crypt(user.password, salt);
-    if (encrypted == NULL)
-	     error("Hash failed");
-    strcpy(user.hash, encrypted);
-    free(encrypted);
+	uint8_t hash[SHA256_BYTES];
+	int i, j;
+    for (i = 0; i < (sizeof(&user.password) / sizeof(&user.password[0])); i += 2) {
+		sha256(&user.password[i], strlen(&user.password[i]), hash);
+		printf("input = '%s'\ndigest: %s\nresult: ", &user.password[i], &user.password[i + 1]);
+		for (j = 0; j < SHA256_BYTES; j++){
+			printf("%x",hash[j]);
+		}
+		printf("\n\n----%s----", hash);
+	}
+    strcpy(user.hash, hash);
 	return user.hash;
 }
 

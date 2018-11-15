@@ -7,7 +7,6 @@
 #include "common.h"
 
 //display error and exit
-void error();
 int login_user();
 int write_new_user();
 int get_user_data();

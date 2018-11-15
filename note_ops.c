@@ -5,15 +5,14 @@
 #include <errno.h> //errno variable
 #include <sys/stat.h>//file operations
 #include <fcntl.h> //file operations
-#include <crypt.h> //encryption algorithms
 #include <unistd.h> //read, open, and other POSIX functions
 #include "common.h"
+#include "sha256.h" //encryption algorithm
 
-//void error();
 
 extern struct account user; //user struct
 extern struct notice note;
-void error(); //display error and exit
+
 /* This function reads the notedata from the file. 
 It returns -1 if it is unable to find notedata.*/
 int view_all_notes() {

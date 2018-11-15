@@ -5,16 +5,15 @@
 #include <ctype.h> //tolower
 #include <sys/stat.h>//file operations
 #include <fcntl.h> //file operations
-#include <crypt.h> //encryption algorithms
 #include <unistd.h> //read, open, and other POSIX functions
 #include <time.h> //date
 #include "common.h"
+#include "sha256.h" //encryption algorithm
 
 extern struct notice note;
 /*
 These functions should only be accessible to registered users
 */
-void error(); //display error and exit
 int create_note();
 int delete_note();
 int mkstemp(char *template);//this function is in stdlib.h 

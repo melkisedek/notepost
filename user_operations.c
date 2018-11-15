@@ -10,7 +10,7 @@
 
 extern struct account user; //use struct defined in start.c
 extern struct notice note;
-void error();
+
 int get_user_data();
 int write_new_user();
 int get_user_data();

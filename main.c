@@ -7,10 +7,9 @@
 #include <signal.h>//interupt signal and other signals
 #include <getopt.h> //argument option parsing
 #include <unistd.h> //read, open, and other POSIX functions 
-#include "main.h"
+#include "common.h"
 
 int start_menu();
-void error();
 char *program_name; /* Name of the running program*/
 
 /* Description of long options for getopt_long. */
@@ -45,23 +44,10 @@ static void print_usage (int is_error)
 	exit (is_error ? 1 : 0);
 }
 
-// this allows us to create custom handler functions for signals
-int catch_signal(int sig, void (*handler)(int)){
-	struct sigaction action;
-	action.sa_handler = handler;
-	sigemptyset(&action.sa_mask);
-	action.sa_flags = 0;
-	return sigaction(sig, &action, NULL);
-}
-
 int main (int argc, char* const argv[])
 {
 	int next_option;
 	
-	//call handle_shutdown if CTRL-C pressed
-	if(catch_signal(SIGINT, handle_shutdown) == -1) 
-		error("Failed to set the interrupt handler");
-
 	/* Store the program name, which we’ll use in error messages.*/
 	program_name = argv[0];
 	
