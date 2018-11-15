@@ -78,11 +78,11 @@ int create_note(){
 //only the current user[as in computer, not this program] has r/w permission
 	file_discriptor = open(NOTEDATA, O_WRONLY|O_CREAT|O_APPEND, S_IRUSR|S_IWUSR);
 	if (file_discriptor == -1)
-		error("Failed to open NOTEDATA file");
+		exit_with_error_msg("Failed to open NOTEDATA file");
 	if (write(file_discriptor, &note, sizeof(struct notice)) == -1)
 	{
 		close(file_discriptor);
-		error("faied to write notedata:");
+		exit_with_error_msg("faied to write notedata:");
 	}
 
 	close(file_discriptor);
@@ -98,7 +98,7 @@ int delete_note(){
 
     tmp_discriptor = mkstemp(tmp_file);//creates temporary file
     if (tmp_discriptor == -1){
-		error("Temporary file creation failed");
+		exit_with_error_msg("Temporary file creation failed");
 	}
 		
 	printf("Note: You can only delete notes you created\n");
@@ -112,22 +112,22 @@ int delete_note(){
 
 	file_discriptor = open(NOTEDATA, O_RDONLY, S_IRUSR|S_IWUSR);
     if(file_discriptor == -1) // Can't open the file, maybe it doesn't exist
-	   error("Failed to open NOTEDATA file");
+	   exit_with_error_msg("Failed to open NOTEDATA file");
 	// first chunk
 	read_bytes = read(file_discriptor, &entry, sizeof(struct notice));
 	if (read_bytes == -1)
-		error("Failed to read notedata:");
+		exit_with_error_msg("Failed to read notedata:");
 
 	// Loop until  username is found.
     if((strcmp(entry.topic, choice) != 0) \
 	&& (strcmp(entry.note_user, note.note_user) != 0) && read_bytes > 0) {
 		//write read bytes to temporary file
     	if(write(tmp_discriptor, &entry, sizeof(struct notice))!= read_bytes)
-    		error("failed to write temporary file"); 
+    		exit_with_error_msg("failed to write temporary file"); 
     	// Keep reading.
 	   	read_bytes = read(file_discriptor, &entry, sizeof(struct notice)); 
 	   	if (read_bytes == -1)
-			error("Failed to read notedata:");
+			exit_with_error_msg("Failed to read notedata:");
     }
 
     close(file_discriptor); // Close the notedata file.
@@ -141,7 +141,7 @@ int delete_note(){
 
     //change permissions on new note (temp file) file
     if (chmod(tmp_file, S_IRUSR|S_IWUSR))
-    	error("error:");
+    	exit_with_error_msg("error:");
     unlink(NOTEDATA); //remove note file 
     link(tmp_file, NOTEDATA); // save temp as note file
 	unlink(tmp_file);//remove temp

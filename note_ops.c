@@ -70,7 +70,7 @@ int find_notes() {
     // Loop until file ends
         if (read_bytes == -1)
         {
-            error("Error: Failed to read notedata");
+            exit_with_error_msg("Error: Failed to read notedata");
         }
         if(read_bytes < sizeof(struct notice)){ 
         //This means that the end of file was reached.

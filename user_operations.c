@@ -57,7 +57,7 @@ int write_new_user(){
 //only the current user[as in computer, not this program] has r/w permission
 	file_discriptor = open(USERDATA, O_WRONLY|O_CREAT|O_APPEND,S_IRUSR|S_IWUSR);
 	if (file_discriptor == -1)
-		error("Failed to open USERDATA file");
+		exit_with_error_msg("Failed to open USERDATA file");
 	write(file_discriptor, &user, sizeof(struct account));
 	close(file_discriptor);
 	return 0;

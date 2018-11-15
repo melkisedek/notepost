@@ -1,10 +1,6 @@
 #include "sha256.h" //encryption algorithms
 
-//display error and terminate
-void error(const char* msg){
-	fprintf(stderr, "%s: %s\n", msg, strerror(errno));
-	exit(1);
-}
+void exit_with_error_msg();
 // account struct to store information about users
 struct account{
 	char username[80];
