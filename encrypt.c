@@ -6,9 +6,9 @@
 #include <fcntl.h> //file operations
 #include <unistd.h> //read, open, and other POSIX functions 
 #include "common.h"
-#include "sha256.h" //encryption algorithms
 
 extern struct account user;
+void sha256();
 
 char* hash_password()
 {
@@ -22,7 +22,8 @@ char* hash_password()
 		}
 		printf("\n\n----%s----", hash);
 	}
-    strcpy(user.hash, hash);
+	memset(user.hash, 0, SHA256_BYTES); // init hash buffer to nulls
+    memcpy(user.hash, hash, SHA256_BYTES);
 	return user.hash;
 }
 

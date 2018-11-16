@@ -60,13 +60,11 @@ int main (int argc, char* const argv[])
 				if(start_menu() == 0)
 					return 0;//user wants to exit program
 			}
-			break;
 		case 'h':
 			print_usage (0); /* User specified -h or --help.*/	
 		case 'v':
 			printf("NotePost version 0.1\n");/*User specified -v or --version.*/
 			exit(0);//close program
-			break;
 
 		case '?':
 			print_usage (1);/* User specified an unrecognized option.*/
