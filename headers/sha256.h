@@ -30,25 +30,26 @@ typedef unsigned __int32 uint32_t;
 #include <stdint.h>
 #endif
 
-#define SHA256_BYTES    32
+#define SHA256_BYTES 32
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-typedef struct {
-	uint8_t  buf[64];
-	uint32_t hash[8];
-	uint32_t bits[2];
-	uint32_t len;
-} sha256_context;
+    typedef struct
+    {
+        uint8_t buf[64];
+        uint32_t hash[8];
+        uint32_t bits[2];
+        uint32_t len;
+    } sha256_context;
 
-void sha256_init(sha256_context *ctx);
-void sha256_hash(sha256_context *ctx, const void *data, size_t len);
-void sha256_done(sha256_context *ctx, uint8_t *hash);
+    void sha256_init(sha256_context *ctx);
+    void sha256_hash(sha256_context *ctx, const void *data, size_t len);
+    void sha256_done(sha256_context *ctx, uint8_t *hash);
 
-void sha256(const void *data, size_t len, uint8_t *hash);
+    void sha256(const void *data, size_t len, uint8_t *hash);
 
 #ifdef __cplusplus
 }

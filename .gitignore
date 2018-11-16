@@ -1,4 +1,5 @@
 *.o
 notepost
+notepost.exe
 notedata.data
 userdata.data

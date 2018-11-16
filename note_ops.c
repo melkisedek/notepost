@@ -1,43 +1,45 @@
-//note_ops.c
 #include <stdio.h>
-#include <string.h> //strerror()
-#include <ctype.h> //tolower()
-#include <errno.h> //errno variable
-#include <sys/stat.h>//file operations
-#include <fcntl.h> //file operations
-#include <unistd.h> //read, open, and other POSIX functions
+#include <string.h>   //strerror()
+#include <ctype.h>    //tolower()
+#include <errno.h>    //errno variable
+#include <sys/stat.h> //file operations
+#include <fcntl.h>    //file operations
+#include <unistd.h>   //read, open, and other POSIX functions
 #include "common.h"
 #include "sha256.h" //encryption algorithm
-
 
 extern struct account user; //user struct
 extern struct notice note;
 
 /* This function reads the notedata from the file. 
 It returns -1 if it is unable to find notedata.*/
-int view_all_notes() {
+int view_all_notes()
+{
     int file_discriptor, read_bytes;
     struct notice entry;
 
     file_discriptor = open(NOTEDATA, O_RDONLY);
-    if(file_discriptor == -1){ // Can't open the file, maybe it doesn't exist
-	   printf("Error: Couldn't open notedata file: %s\n",strerror(errno));
-       printf("Hint: Try creating a note first.\n");
-       return -1;
+    if (file_discriptor == -1)
+    { // Can't open the file, maybe it doesn't exist
+        printf("Error: Couldn't open notedata file: %s\n", strerror(errno));
+        printf("Hint: Try creating a note first.\n");
+        return -1;
     }
-	// Read the first chunk
-    read_bytes = read(file_discriptor, &entry, sizeof(struct notice)); 
+    // Read the first chunk
+    read_bytes = read(file_discriptor, &entry, sizeof(struct notice));
     // Loop until file ends
-    while(read_bytes > 0) { 
+    while (read_bytes > 0)
+    {
         // print out and Keep reading.
-        printf(" Uploader: %s Date: %s Topic: %s Description: %s", 
-            entry.note_user, entry.date, entry.topic, entry.description);
+        printf(" Uploader: %s Date: %s Topic: %s Description: %s",
+               entry.note_user, entry.date, entry.topic, entry.description);
         printf(" --------------------------------------------------\n");
-	   read_bytes = read(file_discriptor, &entry, sizeof(struct notice)); 
+        read_bytes = read(file_discriptor, &entry, sizeof(struct notice));
     }
     close(file_discriptor); // Close the userdata file.
-    if(read_bytes < sizeof(struct notice)){ 
-    //This means that the end of file was reached.
+    if (read_bytes < sizeof(struct notice))
+    {
+        //This means that the end of file was reached.
         printf(" ---------end of file---------\n");
         return -1; // not found
     }
@@ -45,7 +47,8 @@ int view_all_notes() {
     return 1; // Return a success.
 }
 
-int find_notes() {
+int find_notes()
+{
     int file_discriptor, read_bytes, i;
     struct notice entry;
     char choice[100];
@@ -55,39 +58,43 @@ int find_notes() {
 
     int len = strlen(choice);
     //small letters only
-    for(i = 0; i<len; i++){
+    for (i = 0; i < len; i++)
+    {
         choice[i] = tolower(choice[i]);
     }
 
     file_discriptor = open(NOTEDATA, O_RDONLY);
-    if(file_discriptor == -1){ // Can't open the file, maybe it doesn't exist
-       printf("Error: Couldn't open notedata file: %s\n",strerror(errno));
-       return -1;
+    if (file_discriptor == -1)
+    { // Can't open the file, maybe it doesn't exist
+        printf("Error: Couldn't open notedata file: %s\n", strerror(errno));
+        return -1;
     }
-    
-   do { // Read the first chunk
-    read_bytes = read(file_discriptor, &entry, sizeof(struct notice)); 
-    // Loop until file ends
+
+    do
+    { // Read the first chunk
+        read_bytes = read(file_discriptor, &entry, sizeof(struct notice));
+        // Loop until file ends
         if (read_bytes == -1)
         {
             exit_with_error_msg("Error: Failed to read notedata");
         }
-        if(read_bytes < sizeof(struct notice)){ 
-        //This means that the end of file was reached.
+        if (read_bytes < sizeof(struct notice))
+        {
+            //This means that the end of file was reached.
             printf("---------end of file---------\n");
             return -1; // not found
         }
-        if (strcmp(entry.topic, choice) == 0){
+        if (strcmp(entry.topic, choice) == 0)
+        {
             // print out and Keep reading.
             printf(" Uploader: %s Date: %s Topic: %s Description: %s",
-                entry.note_user, entry.date, entry.topic, entry.description);
+                   entry.note_user, entry.date, entry.topic, entry.description);
             printf("--------------------------------------------------\n");
             close(file_discriptor); // Close the userdata file.
             return 1;
         }
-    } while((read_bytes = sizeof(struct notice)) || (read_bytes > 0));
+    } while ((read_bytes = sizeof(struct notice)) || (read_bytes > 0));
     close(file_discriptor); // Close the userdata file.
-    
 
     return 1; // Return a success.
 }
