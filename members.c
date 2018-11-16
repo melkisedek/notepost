@@ -46,7 +46,6 @@ int member_functions()
             // 	printf("Note note found\n");
             // }
             printf("Sorry, the delete feature has been deactivated due to a bug.\n");
-            sleep(2);
         }
         else if ((strcmp("exit\n", choice) == 0) || choice[0] == '3')
         {
@@ -150,7 +149,7 @@ int delete_note()
     //change permissions on new note (temp file) file
     if (chmod(tmp_file, S_IRUSR | S_IWUSR))
         exit_with_error_msg("error:");
-    remove(NOTEDATA);         //remove note file
+    remove(NOTEDATA);           //remove note file
     rename(tmp_file, NOTEDATA); // save temp as note file
 
     return 0;

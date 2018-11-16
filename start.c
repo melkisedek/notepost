@@ -67,7 +67,6 @@ int start_menu()
         else
         {
             printf("Authentication failed. Login first.\n");
-            sleep(1);
         }
     }
     else if ((strcmp("exit\n", choice) == 0) || choice[0] == '6')
@@ -78,7 +77,6 @@ int start_menu()
     else
     {
         printf("# I din\'t understand. Try again please\n");
-        sleep(1);
     }
     return 1;
 }
