@@ -28,7 +28,6 @@ static const char *const short_options = "su:p:hv";
 /* Usage summary text. */
 static const char *const usage_template =
     "Usage: %s [ options ]\n"
-    "-s, --start                Start the program.\n"
     // "-u, --username USERNAME    Specify a username.\n"
     // "-p, --password PASSWORD    Specify password.\n"
     "-h, --help                 Print this information.\n"
@@ -57,11 +56,7 @@ int main(int argc, char *const argv[])
         switch (next_option)
         {
         case 's':
-            while (1)
-            {
-                if (start_menu() == 0)
-                    return 0; //user wants to exit program
-            }
+
         case 'h':
             print_usage(0); /* User specified -h or --help.*/
         case 'v':
@@ -74,16 +69,26 @@ int main(int argc, char *const argv[])
             break;
 
         default:
-            abort(); // close program
+            while (1)
+            {
+                if (start_menu() == 0)
+                    return 0; //user wants to exit program
+            }
         }
     } while (next_option != -1);
 
-    //user typed no arguments, print help info
-    printf("%s: arguments missing \n", program_name);
-    printf("Try \'%s --help\' for more information.' \n", program_name);
     /* This program takes no additional arguments, user specified any. */
     if (optind != argc)
         print_usage(1);
+    else
+    {
+        // no arguments supplied, start the program
+        while (1)
+        {
+            if (start_menu() == 0)
+                return 0; //user wants to exit program
+        }
+    }
 
     return 0;
 }
