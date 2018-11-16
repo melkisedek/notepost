@@ -1,6 +1,6 @@
 #Makafile
-# Default C compiler options. 
-CFLAGS= -std=c11 -O3 -D_POSIX_C_SOURCE -g -pedantic -Wall #-Wextra -Weverything
+# Default C compiler options.
+CFLAGS= -std=c11 -O3 -D_POSIX_C_SOURCE -g -Wall #-Wextra -Weverything
 COMPLR = clang
 EXE = notepost
 # Windows (cygwin)
