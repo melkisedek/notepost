@@ -12,36 +12,38 @@ void sha256();
 char *hash_password()
 {
     uint8_t hash[SHA256_BYTES];
-    int i, j;
-    for (i = 0; i < (sizeof(&user.password) / sizeof(&user.password[0])); i += 2)
+    char hash_string[SHA256_BYTES];
+    memset(hash_string, '\0', SHA256_BYTES);
+
+    int j;
+    char hex[2];
+    sha256(&user.password[0], strlen(&user.password[0]), hash);
+    for (j = 0; j < SHA256_BYTES; j++)
     {
-        sha256(&user.password[i], strlen(&user.password[i]), hash);
-        printf("input = '%s'\ndigest: %s\nresult: ", &user.password[i], &user.password[i + 1]);
-        for (j = 0; j < SHA256_BYTES; j++)
-        {
-            printf("%x", hash[j]);
-        }
-        printf("\n\n----%s----", hash);
+        sprintf(hex, "%x", hash[j]);
+        strcat(hash_string, hex);
     }
-    memset(user.hash, 0, SHA256_BYTES); // init hash buffer to nulls
-    memcpy(user.hash, hash, SHA256_BYTES);
+    printf("\n%s", hash_string);
+    memset(user.hash, '\0', sizeof(char)*SHA256_BYTES); // init hash buffer to nulls
+    strcpy(user.hash, hash_string);
+    printf("\n--%s", user.hash);
     return user.hash;
 }
 
 int authenticate_user()
 {
     int file_discriptor, read_bytes;
-    struct account entry;
+    struct account file_entry;
 
     file_discriptor = open(USERDATA, O_RDONLY);
     if (file_discriptor == -1) // Can't open the file, maybe it doesn't exist
         return -1;
     // Read the first chunk
-    read_bytes = read(file_discriptor, &entry, sizeof(struct account));
+    read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
     // Loop until proper username is found.
-    while ((strcmp(entry.username, user.username) != 0) && read_bytes > 0)
+    while ((strcmp(file_entry.username, tmp_entry.username) != 0) && read_bytes > 0)
     {
-        read_bytes = read(file_discriptor, &entry, sizeof(struct account));
+        read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
         // Keep reading.
     }
     close(file_discriptor); // Close the userdata file.
@@ -52,26 +54,26 @@ int authenticate_user()
     }
     else
     {
-        if ((strcmp(entry.password, user.password) == 0))
+        if ((strcmp(file_entry.password, user.password) == 0))
             return 1; // passed, Return a success.
     }
     return 0; //normal return
 }
 
-int get_login_data()
+int user_exists()
 {
     int file_discriptor, read_bytes;
-    struct account entry;
+    struct account file_entry;
 
     file_discriptor = open(USERDATA, O_RDONLY);
     if (file_discriptor == -1) // Can't open the file, maybe it doesn't exist
         return -1;
     // Read the first chunk
-    read_bytes = read(file_discriptor, &entry, sizeof(struct account));
+    read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
     // Loop until proper username is found.
-    while ((strcmp(entry.username, user.username) != 0) && read_bytes > 0)
+    while ((strcmp(file_entry.username, tmp_entry.username) != 0) && read_bytes > 0)
     {
-        read_bytes = read(file_discriptor, &entry, sizeof(struct account));
+        read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
         // Keep reading.
     }
     close(file_discriptor); // Close the userdata file.

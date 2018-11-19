@@ -8,7 +8,6 @@
 #include <unistd.h> //read, open, and other POSIX functions
 #include "common.h"
 
-int start_menu();
 char *program_name; /* Name of the running program*/
 
 /* Description of long options for getopt_long. */
@@ -89,6 +88,5 @@ int main(int argc, char *const argv[])
                 return 0; //user wants to exit program
         }
     }
-
     return 0;
 }

@@ -12,35 +12,33 @@ extern struct notice note;
 
 int login_user()
 {
-
     printf(" Type your username and password below to login\n");
     printf("Please type your username\n>");
-    fgets(user.username, 80, stdin);
+    fgets(tmp_entry.username, 80, stdin);
     printf("Please type your password\n>");
-    fgets(user.password, 400, stdin);
+    fgets(tmp_entry.password, 400, stdin);
 
     //verify is doesn't already exist, if not existing terminate
-    user.operation = get_login_data;
+    user.operation = user_exists;
     if (user.operation() == -1)
     {
-        printf(" User doesn't exist: %s\n", user.username);
-        sleep(1);
+        printf(" User doesn't exist: %s\n", tmp_entry.username);
+
         return -1;
     }
     else
     { //user exists, hash password
-        strcpy(user.password, hash_password(user.password));
+        strcpy(user.hash, hash_password(tmp_entry.password));
 
         user.operation = authenticate_user;
         if (user.operation() == 1)
         {
             printf("Login successful\n");
-            sleep(1);
+
             return 1;
         }
         else
             printf("Authentication failed\n");
-        sleep(1);
     }
 
     return 0;
@@ -92,25 +90,26 @@ int register_new_user()
 
     printf(" Hi, to register you need a username and password\n");
     printf("Please type a username\n>>");
-    fgets(user.username, 80, stdin);
+    fgets(tmp_entry.username, 80, stdin);
     printf("Please type a password\n>>");
-    fgets(user.password, 400, stdin);
+    fgets(tmp_entry.password, 400, stdin);
     //verify is doesn't already exist, if not existing,
     user.operation = get_user_data;
     if (user.operation() == -1)
     { //hash password and save user to file
-        strcpy(user.password, hash_password(user.password));
+        strcpy(user.username, hash_password(tmp_entry.username));
+        strcpy(user.hash, hash_password(tmp_entry.password));
         user.operation = write_new_user;
         user.operation();
     }
     else
     {
         printf("# Sorry, someone with that username already exists.\n");
-        sleep(1);
+
         return -1;
     }
 
     printf("# Please don\'t forget your username and password.\n");
-    sleep(2);
+
     return 1;
 }

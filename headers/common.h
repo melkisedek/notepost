@@ -26,13 +26,13 @@ struct notice
 #define NOTEDATA "notedata.data" //notes
 /*This is going to be the main handle for use operations*/
 struct account user; //user struct
+struct account tmp_entry; //temp struct
 struct notice note;
 
 void exit_with_error_msg(const char *msg);
 
 char *hash_password();
 int authenticate_user();
-int get_login_data();
 
 int member_functions();
 /*
@@ -47,7 +47,7 @@ int find_notes();
 int get_user_data();
 int write_new_user();
 int get_user_data();
-int get_login_data();
+int user_exists();
 int register_new_user();
 
 int login_user();

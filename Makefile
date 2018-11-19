@@ -3,10 +3,12 @@
 CFLAGS= -std=c11 -O3 -D_POSIX_C_SOURCE -g -Wall #-Wextra -Weverything
 COMPLR = clang
 EXE = notepost
-# Windows (cygwin)
+RM = rm
+# Windows
 ifeq ($(OS), Windows_NT)
 	EXE = notepost
 	COMPLR = C:\MinGW64\bin\gcc.exe
+	RM = del
 endif
 
 notepost:
@@ -22,7 +24,7 @@ notepost:
 
 
 clean:
-	rm *.o notepost
+	$(RM) *.o
 
 clean_all:
-	rm *.o *.data note_temp.* notepost
+	$(RM) *.o *.data note_temp.* $(EXE)
