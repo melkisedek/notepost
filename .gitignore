@@ -1,5 +1,6 @@
 *.o
 notepost
+notepost.db
 notepost.exe
 notedata.data
 userdata.data
