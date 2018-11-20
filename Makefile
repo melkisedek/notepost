@@ -11,16 +11,15 @@ ifeq ($(OS), Windows_NT)
 	RM = del
 endif
 
-notepost:
+default:
 	$(COMPLR) $(CFLAGS) -c members.c -I./headers -o members.o
 	$(COMPLR) $(CFLAGS) -c note_ops.c -I./headers -o note_ops.o
 	$(COMPLR) $(CFLAGS) -c user_operations.c -I./headers -o user_operations.o
 	$(COMPLR) $(CFLAGS) -c encrypt.c -I./headers -o encrypt.o
-	$(COMPLR) $(CFLAGS) -c start.c -I./headers -o start.o
 	$(COMPLR) $(CFLAGS) -c common.c -I./headers -o common.o
 	$(COMPLR) $(CFLAGS) -c sha256.c -I./headers -o sha256.o
 	$(COMPLR) $(CFLAGS) -c main.c -I./headers -o main.o
-	$(COMPLR) $(CFLAGS) -I./headers encrypt.o common.o sha256.o note_ops.o members.o user_operations.o main.o start.o  -L. -o $(EXE)
+	$(COMPLR) $(CFLAGS) -I./headers encrypt.o common.o sha256.o note_ops.o members.o user_operations.o main.o -L. -o $(EXE)
 
 
 clean:
