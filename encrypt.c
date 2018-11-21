@@ -7,20 +7,18 @@
 #include "common.h"
 
 
-char *hash_password(char *password)
+char *hash_password(char *passwd)
 {
-    uint8_t hash[SHA256_BYTES];
-    char hash_string[SHA256_BYTES];
-    memset(hash_string, '\0', SHA256_BYTES);
-    char hex[2];
+    uint8_t hash[SHA256_BYTES] = {0};    // init hash buffer to nulls
+    char hash_string[SHA256_BYTES] = {0};
+    char hex[3] = {0};
 
-    sha256(password, strlen(password), hash);
+    sha256(passwd, strlen(passwd), hash);
     for (int j = 0; j < SHA256_BYTES; j++)
     {
         sprintf(hex, "%x", hash[j]);
         strcat(hash_string, hex);
     }
-    memset(user.hash, '\0', sizeof(char)*SHA256_BYTES); // init hash buffer to nulls
     strcpy(user.hash, hash_string);
     return user.hash;
 }
