@@ -9,8 +9,6 @@
 #include "common.h"
 #include "sha256.h" //encryption algorithm
 
-extern struct notice note;
-
 int member_functions()
 {
     char choice[80];

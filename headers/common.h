@@ -3,7 +3,9 @@
 
 #include "sha256.h" //encryption algorithms
 
-void exit_with_error_msg();
+char *username;
+char *password;
+
 // account struct to store information about users
 struct account
 {
@@ -26,10 +28,10 @@ struct notice
 #define NOTEDATA "notedata.data" //notes
 /*This is going to be the main handle for use operations*/
 struct account user; //user struct
-struct account tmp_entry; //temp struct
 struct notice note;
 
 void exit_with_error_msg(const char *msg);
+char * get_string();
 
 char *hash_password();
 int authenticate_user();

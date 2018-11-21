@@ -11,7 +11,6 @@
 #include "common.h"
 
 char *program_name; /* Name of the running program*/
-extern struct account user;
 
 int start_menu()
 {

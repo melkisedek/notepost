@@ -8,10 +8,7 @@
 #include "common.h"
 #include "sha256.h" //encryption algorithm
 
-extern struct account user; //user struct
-extern struct notice note;
-
-/* This function reads the notedata from the file. 
+/* This function reads the notedata from the file.
 It returns -1 if it is unable to find notedata.*/
 int view_all_notes()
 {

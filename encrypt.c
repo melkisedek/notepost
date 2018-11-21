@@ -6,27 +6,22 @@
 #include <unistd.h>   //read, open, and other POSIX functions
 #include "common.h"
 
-extern struct account user;
-void sha256();
 
-char *hash_password()
+char *hash_password(char *password)
 {
     uint8_t hash[SHA256_BYTES];
     char hash_string[SHA256_BYTES];
     memset(hash_string, '\0', SHA256_BYTES);
-
-    int j;
     char hex[2];
-    sha256(&user.password[0], strlen(&user.password[0]), hash);
-    for (j = 0; j < SHA256_BYTES; j++)
+
+    sha256(password, strlen(password), hash);
+    for (int j = 0; j < SHA256_BYTES; j++)
     {
         sprintf(hex, "%x", hash[j]);
         strcat(hash_string, hex);
     }
-    printf("\n%s", hash_string);
     memset(user.hash, '\0', sizeof(char)*SHA256_BYTES); // init hash buffer to nulls
     strcpy(user.hash, hash_string);
-    printf("\n--%s", user.hash);
     return user.hash;
 }
 
@@ -41,7 +36,7 @@ int authenticate_user()
     // Read the first chunk
     read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
     // Loop until proper username is found.
-    while ((strcmp(file_entry.username, tmp_entry.username) != 0) && read_bytes > 0)
+    while ((strcmp(file_entry.username, username) != 0) && read_bytes > 0)
     {
         read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
         // Keep reading.
@@ -54,7 +49,7 @@ int authenticate_user()
     }
     else
     {
-        if ((strcmp(file_entry.password, user.password) == 0))
+        if ((strcmp(file_entry.password, password) == 0))
             return 1; // passed, Return a success.
     }
     return 0; //normal return
@@ -71,7 +66,7 @@ int user_exists()
     // Read the first chunk
     read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
     // Loop until proper username is found.
-    while ((strcmp(file_entry.username, tmp_entry.username) != 0) && read_bytes > 0)
+    while ((strcmp(file_entry.username, username) != 0) && read_bytes > 0)
     {
         read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
         // Keep reading.
