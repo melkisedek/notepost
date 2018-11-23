@@ -11,20 +11,20 @@ int login_user()
 {
     printf(" Type your username and password below to login\n");
     printf("Please type your username\n>");
-    username = get_string();
+    strcpy(user.username, get_string());
     printf("Please type your password\n>");
-    password = get_string();
+    strcpy(user.password, get_string());
 
     //verify is doesn't already exist, if not existing terminate
     user.operation = user_exists;
     if (user.operation() == -1)
     {
-        printf(" User doesn't exist: %s\n", username);
+        printf(" User doesn't exist: %s\n", user.username);
         return -1;
     }
     else
     { //user exists, hash password
-        strcpy(user.hash, hash_password(password));
+        strcpy(user.hash, hash_password(user.password));
         user.operation = authenticate_user;
         if (user.operation() == 1)
         {
@@ -40,6 +40,7 @@ int login_user()
 int write_new_user()
 {
     int file_discriptor;
+
     // open for read/write, create if not exist, append to end of file,
     //only the current user[as in computer, not this program] has r/w permission
     file_discriptor = open(USERDATA, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
@@ -64,7 +65,7 @@ int get_user_data()
     // Read the first chunk
     read_bytes = read(file_discriptor, &entry, sizeof(struct account));
     // Loop until proper username is found.
-    while ((strcmp(entry.username, username) != 0) && read_bytes > 0)
+    while ((strcmp(entry.username, user.username) != 0) && read_bytes > 0)
     {
         read_bytes = read(file_discriptor, &entry, sizeof(struct account));
         // Keep reading.
@@ -76,30 +77,4 @@ int get_user_data()
     else
         user = entry; //copy to new entry
     return 1;         // Return a success.
-}
-
-int register_new_user()
-{
-    printf(" Hi, to register you need a username and password\n");
-    printf("Please type a username\n>>");
-    username = get_string();
-    printf("Please type a password\n>>");
-    password = get_string();
-    //verify is doesn't already exist, if not existing,
-    user.operation = get_user_data;
-    if (user.operation() == -1)
-    { //hash password and save user to file
-        strcpy(user.username, username);
-        strcpy(user.hash, hash_password(password));
-        user.operation = write_new_user;
-        user.operation();
-    }
-    else
-    {
-        printf("# Sorry, someone with that username already exists.\n");
-        return -1;
-    }
-    printf("# Please don\'t forget your username and password.\n");
-
-    return 1;
 }

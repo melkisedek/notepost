@@ -34,7 +34,7 @@ int authenticate_user()
     // Read the first chunk
     read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
     // Loop until proper username is found.
-    while ((strcmp(file_entry.username, username) != 0) && read_bytes > 0)
+    while ((strcmp(file_entry.username, user.username) != 0) && read_bytes > 0)
     {
         read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
         // Keep reading.
@@ -47,7 +47,7 @@ int authenticate_user()
     }
     else
     {
-        if ((strcmp(file_entry.password, password) == 0))
+        if ((strcmp(file_entry.password, user.password) == 0))
             return 1; // passed, Return a success.
     }
     return 0; //normal return
@@ -64,7 +64,7 @@ int user_exists()
     // Read the first chunk
     read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
     // Loop until proper username is found.
-    while ((strcmp(file_entry.username, username) != 0) && read_bytes > 0)
+    while ((strcmp(file_entry.username, user.username) != 0) && read_bytes > 0)
     {
         read_bytes = read(file_discriptor, &file_entry, sizeof(struct account));
         // Keep reading.

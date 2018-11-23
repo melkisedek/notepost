@@ -15,7 +15,7 @@ char * get_string(){
     unsigned int len_max = 128;
     unsigned int current_size = 0;
 
-    char *pStr = malloc(len_max);
+    pStr = malloc(len_max);
     current_size = len_max;
     if(pStr != NULL)
     {

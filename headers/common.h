@@ -3,9 +3,7 @@
 
 #include "sha256.h" //encryption algorithms
 
-char *username;
-char *password;
-
+char *pStr;
 // account struct to store information about users
 struct account
 {

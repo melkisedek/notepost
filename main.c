@@ -72,7 +72,6 @@ int start_menu()
         else
         {
             printf("Authentication failed. Login first.\n");
-            sleep(1);
         }
     }
     else if ((strcmp("exit\n", choice) == 0) || choice[0] == '6')
@@ -83,7 +82,6 @@ int start_menu()
     else
     {
         printf("# I din\'t understand. Try again please\n");
-        sleep(1);
     }
     return 1;
 }
@@ -127,8 +125,9 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName){
     return 0;
 }
 
-int open_database(sqlite3 *db)
+int create_database()
 {
+    sqlite3 *db = NULL;
     char *zErrMsg = 0;
     int  rc;
     char *sql;
@@ -143,12 +142,17 @@ int open_database(sqlite3 *db)
     }
 
     /* Create SQL statement */
-    sql = "CREATE TABLE COMPANY("  \
-           "ID INT PRIMARY KEY     NOT NULL," \
-           "NAME           TEXT    NOT NULL," \
-           "AGE            INT     NOT NULL," \
-           "ADDRESS        CHAR(50)," \
-           "SALARY         REAL );";
+    sql = "CREATE TABLE accounts(" \
+            "id INTEGER PRIMARY KEY AUTOINCREMENT," \
+            "username TEXT NOT NULL UNIQUE," \
+            "password TEXT NOT NULL);" \
+          "CREATE TABLE notes(" \
+            "id INTEGER PRIMARY KEY AUTOINCREMENT," \
+            "account_id INTEGER NOT NULL," \
+            "date TEXT NOT NULL," \
+            "title TEXT NOT NULL," \
+            "details TEXT NOT NULL," \
+            "FOREIGN KEY(account_id) REFERENCES accounts(id));";
 
     /* Execute SQL statement */
     rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -158,22 +162,115 @@ int open_database(sqlite3 *db)
     }else{
         fprintf(stdout, "Table created successfully\n");
     }
+
+    sqlite3_close(db);
     return 0;
 }
 
-void close_database(sqlite3 *db){
+void insert_user(const char *username, const char *password){
+    sqlite3 *db = NULL;
+    sqlite3_open("notepost.db", &db);
+
+    const char* sql_insert_ = "INSERT INTO accounts ( username, password) VALUES (?,?)";
+    sqlite3_stmt* stmt_insert_ = NULL;
+
+    int rc = sqlite3_prepare_v2(db, sql_insert_, -1, &stmt_insert_, NULL);
+    if(rc != SQLITE_OK){
+        fprintf(stderr, "error: Prepare stmt stmt_insert_ failed, %s\n", sqlite3_errmsg(db));
+        exit(3);
+    }
+
+    rc = sqlite3_bind_text(stmt_insert_, 1, username, strlen(username), NULL);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "error: Bind %s to %d failed, %s\n", username, rc, sqlite3_errmsg(db));
+        sqlite3_close(db);
+        exit(4);
+    }
+
+    rc = sqlite3_bind_text(stmt_insert_, 2, password, strlen(password), NULL);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "error: Bind %s to %d failed, %s\n", password, rc, sqlite3_errmsg(db));
+        sqlite3_close(db);
+        exit(4);
+    }
+
+    rc = sqlite3_step(stmt_insert_);
+    if(rc == SQLITE_DONE) {
+        printf("INSERT completed\n\n");
+    } else {
+        fprintf(stderr, "insert statement didn't return DONE (%i): %s\n", rc, sqlite3_errmsg(db));
+    }
+    sqlite3_finalize(stmt_insert_);
     sqlite3_close(db);
+}
+
+int user_exist(char *username){
+    sqlite3 *db = NULL;
+    sqlite3_open("notepost.db", &db);
+    const char* sql = "Select * from accounts where username = ?";
+    sqlite3_stmt *selectstmt_ = NULL;
+
+    int rc = sqlite3_prepare_v2(db, sql, -1, &selectstmt_, NULL);
+    if(rc != SQLITE_OK){
+        fprintf(stderr, "error: Prepare stmt selectstmt_ failed, %s\n", sqlite3_errmsg(db));
+        sqlite3_close(db);
+        exit(3);
+    }
+
+    rc = sqlite3_bind_text(selectstmt_, 1, username, strlen(username), NULL);
+    if(rc == SQLITE_OK)
+    {
+       if (sqlite3_step(selectstmt_) == SQLITE_ROW)
+       {
+            printf("Record found");// record found
+            sqlite3_close(db);
+            return 1;
+       }
+       else
+       {
+            printf("Record NOT found");// no record found
+            sqlite3_close(db);
+            return 0;
+       }
+    }
+    sqlite3_finalize(selectstmt_);
+    sqlite3_close(db);
+    return 0;
+}
+
+int register_new_user()
+{
+    printf(" Hi, to register you need a username and password\n");
+    printf("Please type a username\n>>");
+    strcpy(user.username, get_string());
+    printf("Please type a password\n");
+    strcpy(user.password, get_string());
+    //verify is doesn't already exist, if not existing,
+    if (!user_exist(user.username))
+    { //hash password and save user to file
+        printf(user.username,"\n");
+        hash_password(user.password);
+        printf(user.hash,"\n");
+        printf(user.password,"\n");
+        insert_user(user.username, user.hash);
+    }
+    else
+    {
+        printf("# Sorry, someone with that username already exists.\n");
+        return -1;
+    }
+    printf("# Please don\'t forget your username and password.\n");
+
+    return 1;
 }
 
 int main(int argc, char *const argv[])
 {
-    sqlite3 *db = NULL;
     int next_option;
-
     /* Store the program name, which we’ll use in error messages.*/
     program_name = argv[0];
 
-    open_database(db);
+    create_database();
 
     /* Parse options. */
     do
@@ -215,6 +312,5 @@ int main(int argc, char *const argv[])
                 return 0; //user wants to exit program
         }
     }
-    close_database(db);
     return 0;
 }
