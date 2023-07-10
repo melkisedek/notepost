@@ -7,11 +7,12 @@ RM = rm
 # Windows
 ifeq ($(OS), Windows_NT)
 	EXE = notepost
-	COMPLR = C:\MinGW64\bin\gcc.exe
+	COMPLR = C:\msys64\mingw64\bin\gcc.exe
 	RM = del
 endif
 
-default:
+default: notepost
+notepost:
 	$(COMPLR) $(CFLAGS) -c members.c -I./headers -o members.o
 	$(COMPLR) $(CFLAGS) -c note_ops.c -I./headers -o note_ops.o
 	$(COMPLR) $(CFLAGS) -c user_operations.c -I./headers -o user_operations.o

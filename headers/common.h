@@ -25,9 +25,9 @@ struct notice
 #define USERDATA "userdata.data" //user data
 #define NOTEDATA "notedata.data" //notes
 /*This is going to be the main handle for use operations*/
-struct account user; //user struct
-struct account tmp_entry; //temp struct
-struct notice note;
+extern struct account user; //user struct
+extern struct account tmp_entry; //temp struct
+extern struct notice note;
 
 void exit_with_error_msg(const char *msg);
 
